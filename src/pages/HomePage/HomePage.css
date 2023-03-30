@@ -1,0 +1,119 @@
+.wrapper-home {
+  background: #f9f6f4;
+}
+.wrapper-menu {
+  padding: 15px 0 0 30px;
+}
+.menu {
+  background: #f9f6f4;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 59px;
+}
+
+.wrapper-home .menu .menu-logo .insight-logo img {
+  width: 133px;
+  height: 58px;
+}
+.nav-menu .nav-list ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 20px;
+  width: 252px;
+  height: 289px;
+}
+
+.nav-menu .nav-list ul li .icon {
+  margin-top: 4px;
+  margin-right: 10px;
+}
+.nav-menu .nav-list ul li:hover {
+  background-color: #ffb800;
+  color: white;
+  border-radius: 3px;
+}
+.active {
+  background-color: #ffb800;
+  color: white;
+}
+
+.wrapper-chart {
+  height: 100%;
+}
+
+.wrapper-home .wrapper-chart .search-home {
+  position: relative;
+  display: flex;
+  padding: 10px 0;
+  height: 48px;
+}
+.wrapper-home .wrapper-chart .search-home input {
+  background: #ede6e6;
+  border-radius: 7px;
+  width: 250px;
+  height: 28px;
+}
+.wrapper-home .wrapper-chart .search-home .search-icon {
+  font-size: 20px;
+  position: absolute;
+  top: 13px;
+  left: 225px;
+}
+
+.wrapper-chart .search-home .input-group .form-label {
+}
+
+.ant-avatar-lg.ant-avatar-icon {
+  font-size: 21px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+.ant-avatar-lg {
+  width: 35px;
+  height: 35px;
+}
+.wrapper-chart .chart-header .chart-main .title-header {
+  position: relative;
+}
+
+.wrapper-chart
+  .chart-header
+  .chart-main
+  .title-header
+  .calendar {
+  position: absolute;
+  right: 0;
+  top: -22px;
+  border-radius: 3px;
+  padding: 8px;
+}
+.wrapper-chart
+  .chart-header
+  .chart-main
+  .title-header
+  .calendar
+  span {
+  font-size: 15px;
+}
+
+.wrapper-chart .chart-header .chart-main .shape {
+  background: linear-gradient(
+    180deg,
+    rgba(250, 160, 95, 0.26) 0%,
+    rgba(255, 255, 255, 0) 141.68%
+  );
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid rgba(250, 160, 95, 0.26) 0%;
+  border-left: none;
+}
+.content {
+  background: #ffffff;
+  border-radius: 18px;
+}

@@ -1,0 +1,52 @@
+.ticket-checked {
+  margin: 15px;
+}
+.ticket-checked .search {
+  position: relative;
+  display: flex;
+  /* padding: 10px 16px; */
+  height: 48px;
+}
+.ticket-checked .search input {
+  background: #f7f7f8;
+  border-radius: 7px;
+  width: 250px;
+  height: 28px;
+}
+.ticket-checked .search .search-icon {
+  font-size: 20px;
+  position: absolute;
+  top: 4px;
+  left: 225px;
+}
+
+.ticket-checked .search {
+  position: relative;
+  display: flex;
+  height: 48px;
+}
+
+.ticket-checked .button-content .checked {
+  border: 1px solid #ff993b;
+  border-radius: 10px;
+  font-size: 15px;
+  padding: 0 23px;
+  color: white;
+  font-weight: bold;
+  background-color: #ff993b;
+}
+.ticket-checked .table-header tr {
+  background-color: #f1f4f8;
+  border: none;
+}
+.ticket-checked tbody tr td {
+  color: #61554f;
+}
+.ticket-checked tbody tr td i {
+  font-style: italic;
+  color: #a5a8b1;
+}
+.ticket-checked .table-header tr th {
+  color: #1e0d03;
+  padding: 0.5rem 0.5rem 0 0.5rem;
+}
