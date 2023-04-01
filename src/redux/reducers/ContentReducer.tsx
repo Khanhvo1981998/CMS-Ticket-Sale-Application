@@ -1,9 +1,11 @@
 import { ReactElement } from "react";
+import HomeContent from "../../pages/HomePage/HomeContent/HomeContent";
 
 export const OPEN_CONTENT = "OPEN_CONTENT"
 
 const stateDefault = {
-    Component: <p> Nội dung mặc định</p>,
+    // Component: <p> Nội dung mặc định</p>,
+    Component: <HomeContent/>,
 
 }
 interface ActionType {

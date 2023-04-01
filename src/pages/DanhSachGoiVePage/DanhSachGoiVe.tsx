@@ -2,21 +2,21 @@ import { FilterOutlined, SearchOutlined } from '@ant-design/icons'
 import { Checkbox, DatePicker, Modal, Pagination } from 'antd'
 import { createObjectCsvWriter } from 'csv-writer'
 import moment, { Moment } from 'moment'
-import  dayjs, { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 import React, { useRef, useState } from 'react'
 import { CSVLink } from 'react-csv'
 import { data } from '../../data'
 
-import "./QuanLyVe.css"
+import "./DanhSachGoiVe.css"
 
 
-  
-  interface Props {
- 
-  }
 
-export default function QuanLyVe({ }: Props) {
+interface Props {
+
+}
+
+export default function DanhSachGoiVe({ }: Props) {
     const [searchValue, setSearchValue] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +40,7 @@ export default function QuanLyVe({ }: Props) {
         setIsModalOpen(false);
     };
 
-   
+
     const [usedStatus, setUsedStatus] = useState('all');
 
     const handleUsedStatusChange = (value: string) => {
@@ -49,7 +49,7 @@ export default function QuanLyVe({ }: Props) {
 
     const [showAllGate, setShowAllGate] = useState(false);
     const handleGateChange = (index: number, value: boolean) => {
-     
+
         if (index === 0 && value) {
             setShowAllGate(true);
         } else {
@@ -70,7 +70,7 @@ export default function QuanLyVe({ }: Props) {
                     <div className='flex mb-3 '>
                         <div className='grid '>
                             <span>Từ ngày</span>
-                            <DatePicker  />
+                            <DatePicker />
                         </div>
                         <div className='grid ml-20 '>
                             <span>Đến ngày</span>
@@ -157,31 +157,33 @@ export default function QuanLyVe({ }: Props) {
             return (
                 <>
                     <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <td scope="row" className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap ">
+                        <td scope="row" className="px-3 py-3 font-medium text-gray-900 whitespace-nowrap ">
                             {item.stt}
                         </td>
                         <td className="py-3 ">
                             {item.bookingCode}
                         </td>
                         <td className="py-3 ">
-                            {item.ticketNumber}
+                            {item.ticketName}
                         </td>
                         <td className="py-3 ">
-                            {item.eventName}
+                            {item.dateUsed}
                         </td>
+
+                        <td className="px-3 py-3">
+                            {item.ticketDate}
+                        </td>
+                        <td className="px-4 py-3 ">
+                            {`${item.ticketPrice} VNĐ`}
+                        </td>
+                        <td className="px-4 py-3 ">
+                            {`${item.ticketCombo} VNĐ/4 Vé`}
+                        </td>
+
                         <td className="py-3 ">
 
                             {(item.status === "Đã sử dụng") ? <span className='flex p-2 mx-4 rounded ticket-used'> <div className='w-3 h-3 mt-1 mr-1 rounded-full bg-slate-500'></div> Đã sử dụng</span> : (item.status === "Chưa sử dụng") ? <span className='flex p-2 mx-4 rounded ticket-unused '><div className='w-3 h-3 mt-1 mr-1 rounded-full bg-lime-500'></div>Chưa sử dụng</span> : (item.status === "Hết hạn") ? <span className='flex p-2 mx-4 rounded ticket-expired'><div className='w-3 h-3 mt-1 mr-1 bg-red-500 rounded-full'></div>Hết hạn</span> : ""}
 
-                        </td>
-                        <td className="px-3 py-3">
-                            {item.dateUsed}
-                        </td>
-                        <td className="px-4 py-3 ">
-                            {item.ticketDate}
-                        </td>
-                        <td className="px-4 py-3 ">
-                            {item.checkin}
                         </td>
                     </tr>
 
@@ -216,7 +218,7 @@ export default function QuanLyVe({ }: Props) {
         checkin: item.checkin,
     }));
 
- 
+
 
     return (
         <div className=" ticket-list">
@@ -231,18 +233,18 @@ export default function QuanLyVe({ }: Props) {
                         <SearchOutlined className='search-icon' />
                     </div>
                     <div className="flex button-content">
-                        <button className="flex items-center justify-center mr-2 filter">
-                            <span className='mb-1' ><FilterOutlined className='mx-1' /></span>
-                            <span onClick={showModal} className='mx-2'> Lọc vé</span>
-                            {renderModal()}
-                        </button>
+
                         <button className="export">
                             <CSVLink data={records} headers={headers} filename={"danh-sach-ve.csv"}>
                                 Xuất file(.csv)
                             </CSVLink>
                         </button>
 
+                        <button className="flex items-center justify-center ml-2 filter">
 
+                            <span onClick={showModal} className='mx-2 add-ticket'> Thêm gói vé</span>
+                            {renderModal()}
+                        </button>
                     </div>
 
                 </div>
@@ -255,25 +257,28 @@ export default function QuanLyVe({ }: Props) {
                                     STT
                                 </th>
                                 <th scope="col" className="px-6 py-3 ">
-                                    Booking Code
+                                    Mã gói
                                 </th>
                                 <th scope="col" className="px-6 py-3 pl-3 ">
-                                    Số vé
+                                    Tên gói vé
                                 </th>
                                 <th scope="col" className="px-6 py-3 ">
-                                    Tên sự kiện
+                                    Ngày áp dụng
                                 </th>
                                 <th scope="col" className="px-6 py-3 ">
-                                    Tình trạng sử dụng
+                                    Ngày hết hạn
                                 </th>
                                 <th scope="col" className="px-6 py-3 ">
-                                    Ngày sử dụng
+                                    Giá vé (VNĐ/Vé)
                                 </th>
                                 <th scope="col" className="px-6 py-3 ">
-                                    Ngày xuất vé
+                                    Giá Combo (VNĐ/Combo)
                                 </th>
                                 <th scope="col" className="px-6 py-3 ">
-                                    Cổng check - in
+                                    Tình trạng
+                                </th>
+                                <th scope="col" className="px-6 py-3 ">
+                                    
                                 </th>
                             </tr>
                         </thead>

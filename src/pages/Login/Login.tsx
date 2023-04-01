@@ -38,19 +38,19 @@ export default function Login({ }: Props) {
     const fName = value?.charAt(0).toUpperCase()
     const handleLogin = () => {
         signInWithPopup(auth, provider)
-        .then((data: any) => {
-          const dataUser = data.user?.email;
-          console.log({ data });
-          const Token = data.user?.getIdToken?.();
-          console.log({ Token });
-                  
-          if (dataUser) {
-            setValue(dataUser);
-            localStorage.setItem(ACCESS_TOKEN, data.user.accessToken); 
-            localStorageService.setUserLocal(dataUser);
-          }
-        })
-        .catch((error: any) => console.log(error));
+            .then((data: any) => {
+                const dataUser = data.user?.email;
+                //   console.log({ data });
+                const Token = data.user?.getIdToken?.();
+                //   console.log({ Token });
+
+                if (dataUser) {
+                    setValue(dataUser);
+                    localStorage.setItem(ACCESS_TOKEN, data.user.accessToken);
+                    localStorageService.setUserLocal(dataUser);
+                }
+            })
+            .catch((error: any) => console.log(error));
     }
     useEffect(() => {
         setValue(localStorageService.getUserLocal())
@@ -72,12 +72,8 @@ export default function Login({ }: Props) {
                             <Menu.Item style={{ color: "white" }} >Logout</Menu.Item>
                         </button>
                     </div>
-
-
-
                 )
                     : ""}
-
             </div>
         </Menu>
     );
@@ -94,12 +90,8 @@ export default function Login({ }: Props) {
                         </Space>
                     </a>
                 </Dropdown>
-
-
                 :
                 <div>
-
-
                     <Avatar className='cursor-pointer ' size="large" icon={<UserOutlined onClick={showModal} />} />
 
                     <Modal className='w-full h-56 ' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>

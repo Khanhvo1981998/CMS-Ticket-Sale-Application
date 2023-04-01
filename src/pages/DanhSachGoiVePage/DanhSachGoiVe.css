@@ -41,9 +41,14 @@
   color: #ff993b;
   font-weight: bold;
 }
+.ticket-list .button-content .filter {
+  color: #fff;
+  background-color: #ff993b;
+}
+
 .ticket-list .button-content .filter,
-.export a:hover {
-  color: #ff993b;
+a:hover {
+  color: #fff;
 }
 .ticket-list .table-header {
   border-top: 10px;

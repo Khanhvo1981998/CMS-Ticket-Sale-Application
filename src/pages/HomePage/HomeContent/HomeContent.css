@@ -1,38 +1,45 @@
 .chart-main {
-  margin: 15px;
+  /* margin: 15px; */
+  margin-top: 15px;
+  background-color: #fff;
+  border-radius: 15px;
 }
 
 .chart-main .note-color-unused {
-  background-color: #ff7043;
+  background-color: #ff8a48;
 }
 .chart-main .note-color-used {
-  background-color: #42a5f5;
+  background-color: #4f75ff;
 }
 
 .chart-main .chart-circle .chart-value-ticket-used-event {
   position: absolute;
-  top: 130px;
-  left: -26px;
+  top: 69px;
+  left: -17px;
   z-index: 2;
 }
 .chart-main .chart-circle .chart-value-ticket-unused-event {
   position: absolute;
-  top: 130px;
-  left: 200px;
+  top: 67px;
+  left: 186px;
   z-index: 2;
 }
 
 .chart-main .chart-circle .chart-value-ticket-used-family {
   position: absolute;
-  top: 40px;
-  left: 10px;
+  top: 0px;
+  left: 158px;
   z-index: 2;
 }
 .chart-main
   .chart-circle
   .chart-value-ticket-unused-family {
   position: absolute;
-  top: 130px;
-  left: 190px;
+  top: 67px;
+  left: -15px;
   z-index: 2;
+}
+
+.chart-main .calendar .ant-picker .ant-picker-suffix {
+  color: #ff7043;
 }

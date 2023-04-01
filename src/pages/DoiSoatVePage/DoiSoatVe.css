@@ -1,5 +1,16 @@
 .ticket-checked {
-  margin: 15px;
+  /* margin: 15px; */
+  margin-top: 15px;
+  /* margin-left: 13px; */
+
+  background-color: #fff;
+  border-radius: 15px;
+}
+
+.filter-ticket {
+  margin-top: 15px;
+  background-color: #fff;
+  border-radius: 15px;
 }
 .ticket-checked .search {
   position: relative;
@@ -12,6 +23,10 @@
   border-radius: 7px;
   width: 250px;
   height: 28px;
+}
+.ticket-checked
+  input[type="search"]::-webkit-search-cancel-button {
+  display: none;
 }
 .ticket-checked .search .search-icon {
   font-size: 20px;
@@ -44,9 +59,36 @@
 }
 .ticket-checked tbody tr td i {
   font-style: italic;
-  color: #a5a8b1;
+  /* color: #a5a8b1; */
 }
 .ticket-checked .table-header tr th {
   color: #1e0d03;
   padding: 0.5rem 0.5rem 0 0.5rem;
+}
+
+.filter-ticket .ant-checkbox .ant-checkbox-inner {
+  border-radius: 50%;
+  border: 2px solid #27aef9;
+}
+.filter-ticket
+  .ant-checkbox-checked
+  .ant-checkbox-inner:after {
+  transform: none;
+  transition: none;
+  opacity: 0;
+}
+
+.filter-ticket
+  .ant-checkbox-wrapper
+  + .ant-checkbox-wrapper {
+  margin-inline-start: 0;
+}
+
+.filter-ticket .filter-btn {
+  padding: 7px 40px;
+  border: 1px solid #ffb26c;
+  border-radius: 5px;
+  color: #ff993b;
+  font-weight: bold;
+  font-size: 20px;
 }

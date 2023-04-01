@@ -1,5 +1,12 @@
+.wrapper-homepage {
+  width: 100%;
+  height: 100%;
+  background-color: red;
+  z-index: 10;
+}
 .wrapper-home {
   background: #f9f6f4;
+  height: 100%;
 }
 .wrapper-menu {
   padding: 15px 0 0 30px;
@@ -41,10 +48,6 @@
   color: white;
 }
 
-.wrapper-chart {
-  height: 100%;
-}
-
 .wrapper-home .wrapper-chart .search-home {
   position: relative;
   display: flex;
@@ -56,6 +59,11 @@
   border-radius: 7px;
   width: 250px;
   height: 28px;
+}
+.wrapper-home
+  .wrapper-chart
+  input[type="search"]::-webkit-search-cancel-button {
+  display: none;
 }
 .wrapper-home .wrapper-chart .search-home .search-icon {
   font-size: 20px;
@@ -114,6 +122,6 @@
   border-left: none;
 }
 .content {
-  background: #ffffff;
+  /* background: #ffffff; */
   border-radius: 18px;
 }

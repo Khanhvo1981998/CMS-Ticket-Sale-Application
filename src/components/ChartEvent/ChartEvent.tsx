@@ -1,54 +1,54 @@
-import React, { Component } from 'react'
-import Paper from "@mui/material/Paper";
-import {
-    Chart,
-    PieSeries,
-    Title,
-    PieSeriesProps,
-} from "@devexpress/dx-react-chart-material-ui";
-import "./ChartEvent.css"
-import { Animation } from "@devexpress/dx-react-chart";
+import React, { Component } from 'react';
+import ReactApexChart from 'react-apexcharts';
+
 type Props = {
-   
 
 }
-// type PieSeriesWithIntrinsicAttributesProps = React.HTMLAttributes<HTMLDivElement> & PieSeriesProps;
+
 type State = {
-  data: { ticket: string; val: number }[];
-};
-
-
+  series: number[];
+  options: ApexCharts.ApexOptions;
+}
 
 export default class ChartEvent extends Component<Props, State> {
-  state: State = {
-    data: [
-      { ticket: "used-ticked", val: 30256 },
-      { ticket: "unused-ticket", val: 28302 }
-    ]
-  };
-   
-    
-render() {
-    const { data: chartData } = this.state;
-
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      series: [ 28302,30256],
+      options: {
+        chart: {
+          type: 'donut',
+        },
+         colors: ['#ff8a48','#4f75ff'],
+         tooltip: {
+          enabled: false,
+        },
+        dataLabels: {
+          enabled: false // tắt data labels
+        },
+        legend: {
+          show: false, // Tắt legend-text
+        },
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 400
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+      },
+    };
+  }
+  render() {
+    const { series, options } = this.state;
     return (
-        <Paper className=" chart-family">
-        <Chart data={chartData}>
-
-            <PieSeries
-              {...{
-                valueField: 'val',
-                argumentField: 'ticket',
-                innerRadius: 0.6
-              }}
-            >
-
-            </PieSeries>
-
-            <Animation />
-        </Chart>
-    </Paper>
+      <div id="chart-family">
+        <ReactApexChart options={options} series={series} type="donut" />
+      </div>
     );
   }
-
 }

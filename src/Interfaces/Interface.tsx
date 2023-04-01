@@ -4,3 +4,7 @@ export interface RouteType {
     path: string;
     component: FC;
 }
+
+
+ 
+

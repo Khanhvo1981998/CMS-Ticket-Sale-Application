@@ -15,8 +15,27 @@ import "./QuanLyVe.css"
   interface Props {
  
   }
+  interface Ticket {
+    stt: number;
+    bookingCode: string;
+    ticketNumber: number;
+    eventName: string;
+    ticketType: string;
+    status: string;
+    dateUsed?: string;
+    ticketDate: string;
+    checkin?: string;
+    checked: boolean;
+  }
+  type UsedStatus = 'all' | 'used' | 'unused' | 'expired';
 
-export default function QuanLyVe({ }: Props) {
+  type Gate = {
+    id: number;
+    name: string;
+  };
+  
+  
+export default function QuanLyVeTest({ }: Props) {
     const [searchValue, setSearchValue] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,28 +44,27 @@ export default function QuanLyVe({ }: Props) {
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
     };
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showModal = () => {
         setIsModalOpen(true);
     };
-
     const handleOk = () => {
         setIsModalOpen(false);
     };
-
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
-   
     const [usedStatus, setUsedStatus] = useState('all');
-
+    const [showAll, setShowAll] = useState(false);
     const handleUsedStatusChange = (value: string) => {
         setUsedStatus(value);
+        // setShowAll(value === 'all');
     };
-
+    const handleShowAllChange = (checked: boolean) => {
+        setShowAll(checked);
+        setUsedStatus(checked ? 'all' : 'unused');
+      };
     const [showAllGate, setShowAllGate] = useState(false);
     const handleGateChange = (index: number, value: boolean) => {
      
@@ -55,11 +73,13 @@ export default function QuanLyVe({ }: Props) {
         } else {
             setShowAllGate(false);
         }
-
     };
 
 
 
+
+    
+  
     const renderModal = () => {
         return (
             <Modal className='w-full h-56 ' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
@@ -141,7 +161,7 @@ export default function QuanLyVe({ }: Props) {
                     </div>
 
                     <div className='flex justify-center '>
-                        <button className='filter-btn'>Lọc</button>
+                        <button  className='filter-btn'>Lọc</button>
                     </div>
                 </div>
             </Modal>
@@ -150,6 +170,7 @@ export default function QuanLyVe({ }: Props) {
 
 
     const renderDanhSachVe = () => {
+        // const filteredData = filterData(data);
         const items = data.slice((currentPage - 1) * 7, currentPage * 7).filter((item) =>
             item.ticketNumber.toString().includes(searchValue)
         );

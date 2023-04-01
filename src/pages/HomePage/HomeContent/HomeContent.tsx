@@ -1,4 +1,5 @@
 import { CalendarOutlined } from '@ant-design/icons'
+import { DatePicker } from 'antd'
 import Chart from '../../../components/Chart/Chart'
 import ChartEvent from '../../../components/ChartEvent/ChartEvent'
 import ChartFamily from '../../../components/ChartFamily/ChartFamily'
@@ -6,12 +7,12 @@ import "../HomeContent/HomeContent.css"
 
 
 type Props = {
-  
+
 }
 
-export default function HomeContent({}: Props) {
-  return (
-    <div className="chart-main ">
+export default function HomeContent({ }: Props) {
+    return (
+        <div className="chart-main ">
             <div className='pt-3 ml-3 text-3xl font-bold '>
                 <h1>Thống kê</h1>
             </div>
@@ -19,12 +20,16 @@ export default function HomeContent({}: Props) {
                 <div className='w-24 '>
                     <h3 className='font-bold '>Doanh thu</h3>
                 </div>
-                <div className="bottom-0 border calendar">
-                    <div className='flex items-center '>
+                {/* <div className="bottom-0 flex border cursor-pointer calendar">
+                    <div className='flex items-center'>
                         <span>Tháng 4, 2023</span>
-                        <CalendarOutlined className='ml-2 text-2xl text-amber-500' />
+                        <CalendarOutlined className='mb-1 ml-2 text-2xl text-amber-500'  />
                     </div>
+                </div> */}
+                <div className='calendar'>
+                    <DatePicker></DatePicker>
                 </div>
+
             </div>
             <div className='flex gap-6 mx-5'>
                 <div className='w-full shape'>
@@ -44,10 +49,13 @@ export default function HomeContent({}: Props) {
             </div>
             <div className='flex justify-around mt-3'>
                 <div className="bottom-0 calendar">
-                    <div className='flex items-center p-2 border rounded'>
+                    {/* <div className='flex items-center p-2 border rounded cursor-pointer'>
                         <span>Tháng 4, 2023</span>
                         <CalendarOutlined className='ml-2 text-2xl text-amber-500' />
         
+                    </div> */}
+                    <div className='h-12 calendar'>
+                        <DatePicker></DatePicker>
                     </div>
                 </div>
                 <div className='chart-circle'>
@@ -63,7 +71,7 @@ export default function HomeContent({}: Props) {
                             <div className="chart-value-ticket-unused-family">
                                 <span className='p-2 text-xl bg-white rounded shadow'>56024</span>
                             </div>
-                            <ChartFamily  />
+                            <ChartFamily />
                         </div>
 
                     </div>
@@ -98,5 +106,5 @@ export default function HomeContent({}: Props) {
             </div>
 
         </div>
-  )
+    )
 }
