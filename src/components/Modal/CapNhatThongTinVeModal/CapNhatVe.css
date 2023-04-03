@@ -1,0 +1,11 @@
+.update-ticket input:focus-visible {
+  outline: none;
+}
+
+.update-ticket .anticon svg {
+  color: #ff993b;
+}
+
+.update-ticket .ant-checkbox .ant-checkbox-inner {
+  border: 1px solid #27aef9;
+}

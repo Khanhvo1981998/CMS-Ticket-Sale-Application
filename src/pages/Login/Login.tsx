@@ -1,5 +1,5 @@
 import { AppleOutlined, FacebookOutlined, GoogleOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Dropdown, Menu, Modal, Space } from 'antd';
+import { Avatar, Dropdown, Menu, message, Modal, Space } from 'antd';
 import { signInWithPopup } from 'firebase/auth';
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
@@ -43,14 +43,17 @@ export default function Login({ }: Props) {
                 //   console.log({ data });
                 const Token = data.user?.getIdToken?.();
                 //   console.log({ Token });
-
                 if (dataUser) {
                     setValue(dataUser);
                     localStorage.setItem(ACCESS_TOKEN, data.user.accessToken);
                     localStorageService.setUserLocal(dataUser);
+                    message.success("Đăng nhập thành công")
                 }
             })
-            .catch((error: any) => console.log(error));
+            .catch((error: any) =>{
+                console.log(error)
+                message.error("Đăng nhập thất bại")
+            })
     }
     useEffect(() => {
         setValue(localStorageService.getUserLocal())

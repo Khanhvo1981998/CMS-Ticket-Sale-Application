@@ -1,11 +1,16 @@
 import { SearchOutlined } from '@ant-design/icons'
-import { Button, DatePicker, Pagination } from 'antd'
+import { Button, DatePicker, Pagination, PaginationProps } from 'antd'
 import Checkbox, { CheckboxChangeEvent } from 'antd/es/checkbox'
 import React, { useEffect, useState } from 'react'
 import { data } from '../../data'
 import "./DoiSoatVe.css"
 
 type Props = {}
+interface MyPaginationProps extends PaginationProps {
+    currentPage: number;
+    onPageChange: (page: number) => void;
+    pageCount: number;
+  }
 
 export default function DoiSoatVePage({ }: Props) {
     const [searchValue, setSearchValue] = useState<string>("");
@@ -17,85 +22,65 @@ export default function DoiSoatVePage({ }: Props) {
         setCurrentPage(page);
     };
 
-
-    // const onChange = (e: CheckboxChangeEvent) => {
-    //     console.log(`checked = ${e.target.checked}`);
-    //     const { name, checked } = event.target;
-    // };
-
     const [showAll, setShowAll] = useState(true);
     const [showChecked, setShowChecked] = useState(false);
     const [showUnchecked, setShowUnchecked] = useState(false);
-    
-    const [filteredData, setFilteredData] = useState<{
-        stt: number;
-        bookingCode: string;
-        ticketNumber: number;
-        eventName: string;
-        ticketType: string;
-        status: string;
-        dateUsed: string;
-        ticketDate: string;
-        checkin: string;
-        checked: boolean;
-    }[]>([]);
+
+
+    const [filteredData, setFilteredData] = useState(data)
+
     const [showExportButton, setShowExportButton] = useState(false);
     const [showCompleteButton, setShowCompleteButton] = useState(false);
 
-    // const onChange = (event: CheckboxChangeEvent) => {
-    //     const { name, checked } = event.target;
 
-    //     if (name === "all") {
-    //         setShowAll(checked);
-    //     } else if (name === "checked") {
-    //         setShowChecked(checked);
-    //     } else if (name === "unchecked") {
-    //         setShowUnchecked(checked);
-    //     }
-    // };
 
     const onCheckAllChange = (e: any) => {
         setShowAll(e.target.checked);
         setShowChecked(false);
         setShowUnchecked(false);
+
     };
 
     const onCheckedChange = (e: any) => {
         setShowChecked(e.target.checked);
         setShowAll(false);
         setShowUnchecked(false)
+
     };
 
     const onUncheckedChange = (e: any) => {
         setShowUnchecked(e.target.checked);
         setShowAll(false);
         setShowChecked(false)
+
     };
-   
+
+
     const onFilterClick = () => {
         let filteredItems = data.filter((item) =>
-          item.ticketNumber
+            item.ticketNumber
         );
-      
+
         if (showChecked) {
-          filteredItems = filteredItems.filter((item) => item.checked);
-          setShowExportButton(true);
-          setShowCompleteButton(false)
-          console.log({showExportButton});;
+            filteredItems = filteredItems.filter((item) => item.checked);
+            setShowExportButton(true);
+            setShowCompleteButton(false)
+            console.log({ showExportButton });;
         } else if (showUnchecked) {
-          filteredItems = filteredItems.filter((item) => !item.checked);
-          setShowExportButton(false);
-          setShowCompleteButton(true);
-          console.log({showExportButton});
-          
+            filteredItems = filteredItems.filter((item) => !item.checked);
+            setShowExportButton(false);
+            setShowCompleteButton(true);
+            console.log({ showExportButton });
+
         } else {
-          setShowExportButton(false);
-          setShowCompleteButton(false);
-          console.log({showExportButton});
+            setShowAll(true)
+            setShowExportButton(false);
+            setShowCompleteButton(false);
+            console.log({ showExportButton });
         }
-      
+
         setFilteredData(filteredItems);
-      };
+    };
 
     const renderButton = () => {
         if (showExportButton && !showCompleteButton) {
@@ -103,31 +88,61 @@ export default function DoiSoatVePage({ }: Props) {
                 <button className="export">Xuất file(.csv)</button>
             );
         }
-        if(!showExportButton && showCompleteButton){
+        if (!showExportButton && showCompleteButton) {
             return (
                 <button className="checked">Chốt đối soát</button>
             );
         }
-        if(!showExportButton && !showExportButton){
-            return(
+        if (!showExportButton && !showExportButton) {
+            return (
                 <div></div>
             )
         }
 
     };
 
+ 
+
+    const getPageCount = () => {
+        const itemsPerPage = 7;
+        let filteredItems = data.filter((item) =>
+          item.ticketNumber.toString().includes(searchValue)
+        );
+      
+        if (showChecked) {
+          filteredItems = filteredItems.filter((item) => item.checked);
+        } else if (showUnchecked) {
+          filteredItems = filteredItems.filter((item) => !item.checked);
+        }
+      
+        console.log({filteredItems});
+        
+        const itemCount = filteredItems.length;
+        const pageCount = Math.ceil(itemCount / itemsPerPage);
+      
+        // Kiểm tra xem có phần dư không
+        const Remainder = itemCount % itemsPerPage !== 0;
+      
+        // Nếu có phần dư, thêm 1 trang
+        if (Remainder) {
+          return pageCount + 1;
+        }
+        return pageCount;
+      };
+      
+      const onPageChange = handlePageChange as (page: number) => void;
+
+      const paginationProps = {
+        current: currentPage,
+        onChange: onPageChange,
+        total: getPageCount() * 7
+      };
+      
+      
     const renderDanhSachVe = () => {
         const items = filteredData
             .slice((currentPage - 1) * 7, currentPage * 7).filter((item) =>
-            item.ticketNumber.toString().includes(searchValue));
-        // .filter(
-        //     (item) =>
-        //         item.ticketNumber.toString().includes(searchValue) &&
-        //         ((showAll) ||
-        //             (showChecked && item.checked) ||
-        //             (showUnchecked && !item.checked))
-        // );
-
+                item.ticketNumber.toString().includes(searchValue));
         return items.map((item, index) => {
 
             return (
@@ -152,12 +167,6 @@ export default function DoiSoatVePage({ }: Props) {
                             {item.checkin}
                         </td>
                         <td className="px-4 py-3 ">
-
-                            {/* {(!item.checked) ? (
-                                <i style={{ color: "#a5a8b1" }}>Chưa đối soát</i>
-                            ) : (
-                                <i className='text-red-500 '>Đã đối soát</i>
-                            )} */}
 
                             {!item.checked ? (
                                 <i style={{ color: '#a5a8b1' }}>Chưa đối soát</i>
@@ -187,7 +196,6 @@ export default function DoiSoatVePage({ }: Props) {
                             <SearchOutlined className='search-icon' />
                         </div>
                         <div className="flex button-content">
-                            {/* <button className="checked">Chốt đối soát</button> */}
                             {renderButton()}
                         </div>
                     </div>
@@ -223,14 +231,14 @@ export default function DoiSoatVePage({ }: Props) {
 
                         </table>
                         <div className='flex items-center justify-center my-5'>
-                            <Pagination
+                            {/* <Pagination
                                 className="flex"
                                 current={currentPage}
                                 defaultPageSize={7}
                                 total={data.length}
                                 onChange={handlePageChange}
-                                
-                            />
+                            /> */}
+                        <Pagination {...paginationProps} />
                         </div>
                     </div>
                 </div>
@@ -249,25 +257,16 @@ export default function DoiSoatVePage({ }: Props) {
                         <div className=''>
                             <Checkbox
                                 checked={showAll} onChange={onCheckAllChange}
-                            // checked={showAll}
-                            // name="all"
-                            // onChange={onChange} 
                             >Tất cả
                             </Checkbox>
 
                             <Checkbox
                                 checked={showChecked} onChange={onCheckedChange}
-                            // checked={showChecked}
-                            // name="checked"
-                            // onChange={onChange}
                             >Đã đối soát
                             </Checkbox>
 
                             <Checkbox
                                 checked={showUnchecked} onChange={onUncheckedChange}
-                            // checked={showUnchecked}
-                            // name="unchecked"
-                            // onChange={onChange}
                             >Chưa đối soát
                             </Checkbox>
                         </div>

@@ -1,4 +1,4 @@
-import { FilterOutlined, SearchOutlined } from '@ant-design/icons'
+import { EditOutlined, FilterOutlined, SearchOutlined } from '@ant-design/icons'
 import { Checkbox, DatePicker, Modal, Pagination } from 'antd'
 import { createObjectCsvWriter } from 'csv-writer'
 import moment, { Moment } from 'moment'
@@ -9,6 +9,14 @@ import { CSVLink } from 'react-csv'
 import { data } from '../../data'
 
 import "./DanhSachGoiVe.css"
+import { useDispatch } from 'react-redux';
+import ThemGoiVe from '../../components/Modal/ThemGoiVeModal/ThemGoiVe';
+
+import { OPEN_CONTENT } from '../../redux/reducers/ContentReducer';
+import { OPEN_MODAL } from '../../redux/reducers/ModalReducer';
+import ModalHOC from '../../HOC/ModalHOC';
+import CapNhatVe from '../../components/Modal/CapNhatThongTinVeModal/CapNhatVe';
+
 
 
 
@@ -17,6 +25,7 @@ interface Props {
 }
 
 export default function DanhSachGoiVe({ }: Props) {
+    const dispatch = useDispatch()
     const [searchValue, setSearchValue] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,128 +35,7 @@ export default function DanhSachGoiVe({ }: Props) {
         setCurrentPage(page);
     };
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
-
-
-    const [usedStatus, setUsedStatus] = useState('all');
-
-    const handleUsedStatusChange = (value: string) => {
-        setUsedStatus(value);
-    };
-
-    const [showAllGate, setShowAllGate] = useState(false);
-    const handleGateChange = (index: number, value: boolean) => {
-
-        if (index === 0 && value) {
-            setShowAllGate(true);
-        } else {
-            setShowAllGate(false);
-        }
-
-    };
-
-
-
-    const renderModal = () => {
-        return (
-            <Modal className='w-full h-56 ' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <div className='wrapper-model'>
-                    <div className='flex justify-center mb-3'>
-                        <h1 className='text-3xl font-bold '>Lọc vé</h1>
-                    </div>
-                    <div className='flex mb-3 '>
-                        <div className='grid '>
-                            <span>Từ ngày</span>
-                            <DatePicker />
-                        </div>
-                        <div className='grid ml-20 '>
-                            <span>Đến ngày</span>
-                            <DatePicker />
-                        </div>
-                    </div>
-
-                    <div className='mb-3 used-status'>
-                        <h1 className='mb-1 '>
-                            Tình trạng sử dụng
-                        </h1>
-                        <div className='flex justify-between '>
-                            <Checkbox
-                                checked={usedStatus === 'all'} onChange={() => handleUsedStatusChange('all')}
-                            >Tất cả
-                            </Checkbox>
-
-                            <Checkbox
-                                checked={usedStatus === 'used'} onChange={() => handleUsedStatusChange('used')}
-                            >Đã sử dụng
-                            </Checkbox>
-
-                            <Checkbox
-                                checked={usedStatus === 'unused'} onChange={() => handleUsedStatusChange('unused')}
-                            >Chưa sử dụng
-                            </Checkbox>
-
-                            <Checkbox
-                                checked={usedStatus === 'expired'} onChange={() => handleUsedStatusChange('expired')}
-                            >Hết hạn
-                            </Checkbox>
-                        </div>
-                    </div>
-
-                    <div className='mb-3 gate-checkin'>
-                        <h1 className='mb-1 '>Cổng Check-in</h1>
-                        <div className='grid grid-cols-3 gap-3 '>
-                            <Checkbox
-                                checked={showAllGate} onChange={(e) => handleGateChange(0, e.target.checked)}
-                            >Tất cả
-                            </Checkbox>
-
-                            <Checkbox
-                                onChange={(e) => handleGateChange(1, e.target.checked)} disabled={showAllGate}
-                            >Cổng 1
-                            </Checkbox>
-
-                            <Checkbox
-                                onChange={(e) => handleGateChange(2, e.target.checked)} disabled={showAllGate}
-                            >Cổng 2
-                            </Checkbox>
-
-                            <Checkbox
-                                onChange={(e) => handleGateChange(3, e.target.checked)} disabled={showAllGate}
-                            >Cổng 3
-                            </Checkbox>
-
-                            <Checkbox
-                                onChange={(e) => handleGateChange(4, e.target.checked)} disabled={showAllGate}
-                            >Cổng 4
-                            </Checkbox>
-
-                            <Checkbox
-                                onChange={(e) => handleGateChange(5, e.target.checked)} disabled={showAllGate}
-                            >Cổng 5
-                            </Checkbox>
-                        </div>
-                    </div>
-
-                    <div className='flex justify-center '>
-                        <button className='filter-btn'>Lọc</button>
-                    </div>
-                </div>
-            </Modal>
-        )
-    }
-
+  
 
     const renderDanhSachVe = () => {
         const items = data.slice((currentPage - 1) * 7, currentPage * 7).filter((item) =>
@@ -169,7 +57,6 @@ export default function DanhSachGoiVe({ }: Props) {
                         <td className="py-3 ">
                             {item.dateUsed}
                         </td>
-
                         <td className="px-3 py-3">
                             {item.ticketDate}
                         </td>
@@ -181,9 +68,24 @@ export default function DanhSachGoiVe({ }: Props) {
                         </td>
 
                         <td className="py-3 ">
-
                             {(item.status === "Đã sử dụng") ? <span className='flex p-2 mx-4 rounded ticket-used'> <div className='w-3 h-3 mt-1 mr-1 rounded-full bg-slate-500'></div> Đã sử dụng</span> : (item.status === "Chưa sử dụng") ? <span className='flex p-2 mx-4 rounded ticket-unused '><div className='w-3 h-3 mt-1 mr-1 rounded-full bg-lime-500'></div>Chưa sử dụng</span> : (item.status === "Hết hạn") ? <span className='flex p-2 mx-4 rounded ticket-expired'><div className='w-3 h-3 mt-1 mr-1 bg-red-500 rounded-full'></div>Hết hạn</span> : ""}
-
+                        </td>
+                        <td
+                        onClick={(e) => {
+                              
+                            e.preventDefault()
+                            const action = {
+                                type: OPEN_MODAL,
+                                Component: <CapNhatVe />,
+                            }
+                            dispatch(action)
+                        }}  
+                        className="flex items-center justify-center px-4 pt-4 cursor-pointer ">
+                            <div className='relative w-5 h-5 bg-white rounded border-3 border-amber-500'>
+                            <EditOutlined className="absolute top-0 left-0 mb-1 mr-1 text-amber-500 edit" />
+                            </div>
+                          
+                            <span className='pl-1 text-amber-500'>Cập nhật</span>
                         </td>
                     </tr>
 
@@ -219,7 +121,6 @@ export default function DanhSachGoiVe({ }: Props) {
     }));
 
 
-
     return (
         <div className=" ticket-list">
             <div className='m-3 '>
@@ -240,12 +141,21 @@ export default function DanhSachGoiVe({ }: Props) {
                             </CSVLink>
                         </button>
 
-                        <button className="flex items-center justify-center ml-2 filter">
-
-                            <span onClick={showModal} className='mx-2 add-ticket'> Thêm gói vé</span>
-                            {renderModal()}
+                        <button
+                       onClick={(e) => {
+                              
+                        e.preventDefault()
+                        const action = {
+                            type: OPEN_MODAL,
+                            Component: <ThemGoiVe />,
+                        }
+                        dispatch(action)
+                    }}  
+                        className="flex items-center justify-center ml-2 filter">
+                            <span className='mx-2 add-ticket'> Thêm gói vé</span>
                         </button>
                     </div>
+                    <ModalHOC />
 
                 </div>
 

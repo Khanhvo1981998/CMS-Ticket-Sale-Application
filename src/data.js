@@ -102,7 +102,7 @@ export const data = [
         dateUsed: "26/03/2023",
         ticketDate: "20/3/2023",
         checkin: "Cổng 8",
-        checked: false
+        checked: true
     },
     {
         stt: 8,
@@ -117,7 +117,7 @@ export const data = [
         dateUsed: "26/03/2023",
         ticketDate: "20/3/2023",
         checkin: "Cổng 3",
-        checked: false
+        checked: true
     },
     {
         stt: 9,
@@ -207,7 +207,7 @@ export const data = [
         dateUsed: "26/03/2023",
         ticketDate: "20/3/2023",
         checkin: "Cổng 6",
-        checked: false
+        checked: true
     },
     {
         stt: 15,
@@ -282,6 +282,179 @@ export const data = [
         dateUsed: "26/03/2023",
         ticketDate: "20/3/2023",
         checkin: "Cổng 6",
+        checked: true
+    },
+    {
+        stt: 19,
+        bookingCode: "MMT90210501",
+        ticketNumber: 64355267345,
+        eventName: "Hội chợ triển lãm tiêu dùng 2023",
+        ticketCombo: "360.000",
+        ticketPrice: "90.000",
+        ticketName: "Gói gia đình",
+        ticketType: "Vé cổng",
+        status: "Hết hạn",
+        dateUsed: "26/03/2023",
+        ticketDate: "20/3/2023",
+        checkin: "Cổng 6",
         checked: false
     },
+    {
+        stt: 20,
+        bookingCode: "MMA20210501",
+        ticketNumber: 4553745267345,
+        eventName: "Hội chợ triển lãm tiêu dùng 2023",
+        ticketCombo: "360.000",
+        ticketPrice: "90.000",
+        ticketName: "Gói gia đình",
+        ticketType: "Vé cổng",
+        status: "Hết hạn",
+        dateUsed: "26/03/2023",
+        ticketDate: "20/3/2023",
+        checkin: "Cổng 6",
+        checked: true
+    },
+    {
+        stt: 21,
+        bookingCode: "MMA20210501",
+        ticketNumber: 4553745267345,
+        eventName: "Hội chợ triển lãm tiêu dùng 2023",
+        ticketCombo: "360.000",
+        ticketPrice: "90.000",
+        ticketName: "Gói gia đình",
+        ticketType: "Vé cổng",
+        status: "Hết hạn",
+        dateUsed: "26/03/2023",
+        ticketDate: "20/3/2023",
+        checkin: "Cổng 6",
+        checked: true
+    },
+    {
+        stt: 22,
+        bookingCode: "MMA20210501",
+        ticketNumber: 4553745267345,
+        eventName: "Hội chợ triển lãm tiêu dùng 2023",
+        ticketCombo: "360.000",
+        ticketPrice: "90.000",
+        ticketName: "Gói gia đình",
+        ticketType: "Vé cổng",
+        status: "Hết hạn",
+        dateUsed: "26/03/2023",
+        ticketDate: "20/3/2023",
+        checkin: "Cổng 6",
+        checked: true
+    },
+    {
+        stt: 23,
+        bookingCode: "MMA20210501",
+        ticketNumber: 4553745267345,
+        eventName: "Hội chợ triển lãm tiêu dùng 2023",
+        ticketCombo: "360.000",
+        ticketPrice: "90.000",
+        ticketName: "Gói gia đình",
+        ticketType: "Vé cổng",
+        status: "Hết hạn",
+        dateUsed: "26/03/2023",
+        ticketDate: "20/3/2023",
+        checkin: "Cổng 6",
+        checked: false
+    },
+    {
+        stt: 24,
+        bookingCode: "MMA20210501",
+        ticketNumber: 4553745267345,
+        eventName: "Hội chợ triển lãm tiêu dùng 2023",
+        ticketCombo: "360.000",
+        ticketPrice: "90.000",
+        ticketName: "Gói gia đình",
+        ticketType: "Vé cổng",
+        status: "Hết hạn",
+        dateUsed: "26/03/2023",
+        ticketDate: "20/3/2023",
+        checkin: "Cổng 6",
+        checked: false
+    },
+    {
+        stt: 25,
+        bookingCode: "MMA20210501",
+        ticketNumber: 4553745267345,
+        eventName: "Hội chợ triển lãm tiêu dùng 2023",
+        ticketCombo: "360.000",
+        ticketPrice: "90.000",
+        ticketName: "Gói gia đình",
+        ticketType: "Vé cổng",
+        status: "Hết hạn",
+        dateUsed: "26/03/2023",
+        ticketDate: "20/3/2023",
+        checkin: "Cổng 6",
+        checked: true
+    },
+    {
+        stt: 26,
+        bookingCode: "MMA20210501",
+        ticketNumber: 4553745267345,
+        eventName: "Hội chợ triển lãm tiêu dùng 2023",
+        ticketCombo: "360.000",
+        ticketPrice: "90.000",
+        ticketName: "Gói gia đình",
+        ticketType: "Vé cổng",
+        status: "Hết hạn",
+        dateUsed: "26/03/2023",
+        ticketDate: "20/3/2023",
+        checkin: "Cổng 6",
+        checked: true
+    },
+    {
+        stt: 27,
+        bookingCode: "MMA20210501",
+        ticketNumber: 4553745267345,
+        eventName: "Hội chợ triển lãm tiêu dùng 2023",
+        ticketCombo: "360.000",
+        ticketPrice: "90.000",
+        ticketName: "Gói gia đình",
+        ticketType: "Vé cổng",
+        status: "Hết hạn",
+        dateUsed: "26/03/2023",
+        ticketDate: "20/3/2023",
+        checkin: "Cổng 6",
+        checked: true
+    },
+    {
+        stt: 28,
+        bookingCode: "MMA20210501",
+        ticketNumber: 4553745267345,
+        eventName: "Hội chợ triển lãm tiêu dùng 2023",
+        ticketCombo: "360.000",
+        ticketPrice: "90.000",
+        ticketName: "Gói gia đình",
+        ticketType: "Vé cổng",
+        status: "Hết hạn",
+        dateUsed: "26/03/2023",
+        ticketDate: "20/3/2023",
+        checkin: "Cổng 6",
+        checked: true
+    },
+    {
+        stt: 29,
+        bookingCode: "MMA20210501",
+        ticketNumber: 4553745267345,
+        eventName: "Hội chợ triển lãm tiêu dùng 2023",
+        ticketCombo: "360.000",
+        ticketPrice: "90.000",
+        ticketName: "Gói gia đình",
+        ticketType: "Vé cổng",
+        status: "Hết hạn",
+        dateUsed: "26/03/2023",
+        ticketDate: "20/3/2023",
+        checkin: "Cổng 6",
+        checked: true
+    },
 ]
+
+
+
+
+
+
+
+

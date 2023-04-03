@@ -7,10 +7,10 @@ import { userRoutes } from './routes/userRoute';
 
 
 
+
 function App() {
   return (
     <BrowserRouter >
-
       <Routes>
         {userRoutes.map((route:RouteType, index:number) => {
           return (

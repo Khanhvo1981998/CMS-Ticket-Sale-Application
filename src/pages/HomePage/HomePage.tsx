@@ -15,12 +15,14 @@ import DoiSoatVePage from '../DoiSoatVePage/DoiSoatVePage';
 import Login from '../Login/Login';
 import { useState } from 'react';
 import QuanLyVe from '../QuanLyVePage/QuanLyVe';
-import QuanLyVeTest from '../QuanLyVePage/QuanLyVeTest';
+// import QuanLyVeTest from '../QuanLyVePage/QuanLyVeTest';
 import DanhSachGoiVe from '../DanhSachGoiVePage/DanhSachGoiVe';
+import DanhSachSuKien from '../DanhSachSuKienPage/DanhSachSuKien';
+import QuanLyThietBi from '../QuanLyThietBiPage/QuanLyThietBi';
 type Props = {}
 
 export default function HomePage({ }: Props) {
-    const [activeItem, setActiveItem] = useState('');
+    const [activeItem, setActiveItem] = useState('Home');
     const dispatch = useDispatch()
     return (
         <div className='wrapper-homepage'>
@@ -48,7 +50,9 @@ export default function HomePage({ }: Props) {
                                                 dispatch(action)
                                             }}
                                             style={{ borderRadius: 8, cursor: "pointer", }}
-                                            className={`nav-item ${activeItem === 'Home' ? 'active' : ''}`}>
+                                            className={`nav-item ${activeItem === 'Home' ? 'active' : ''}`}
+                                      
+                                            >
                                             <a className='flex my-2 ml-1 mr-20 logo-item' href=""><HomeOutlined className='icon' />Trang chủ</a>
                                         </li>
                                         <li
@@ -57,7 +61,8 @@ export default function HomePage({ }: Props) {
                                                 setActiveItem('QuanLyVe')
                                                 const action = {
                                                     type: OPEN_CONTENT,
-                                                    Component: <QuanLyVeTest />
+                                                    // Component: <QuanLyVeTest />
+                                                    Component: <QuanLyVe />
                                                 }
                                                 dispatch(action)
 
@@ -82,7 +87,7 @@ export default function HomePage({ }: Props) {
                                                 setActiveItem('DanhSachSuKien')
                                                 const action = {
                                                     type: OPEN_CONTENT,
-                                                    // Component: <DoiSoatVe />
+                                                    Component: <DanhSachSuKien />
                                                 }
                                                 dispatch(action)
                                             }}
@@ -97,7 +102,7 @@ export default function HomePage({ }: Props) {
                                                 setActiveItem('QuanLyThietBi')
                                                 const action = {
                                                     type: OPEN_CONTENT,
-                                                    // Component: Component
+                                                    Component: <QuanLyThietBi />
                                                 }
                                                 dispatch(action)
                                             }}

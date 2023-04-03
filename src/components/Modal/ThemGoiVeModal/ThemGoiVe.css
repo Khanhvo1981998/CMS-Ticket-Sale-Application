@@ -1,0 +1,11 @@
+.add-ticket input:focus-visible {
+  outline: none;
+}
+
+.add-ticket .anticon svg {
+  color: #ff993b;
+}
+
+.add-ticket .ant-checkbox .ant-checkbox-inner {
+  border: 1px solid #27aef9;
+}
