@@ -1,14 +1,45 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import DanhSachGoiVe from '../pages/DanhSachGoiVePage/DanhSachGoiVe';
+import DanhSachSuKien from '../pages/DanhSachSuKienPage/DanhSachSuKien';
+import DoiSoatVePage from '../pages/DoiSoatVePage/DoiSoatVePage';
+import HomeContent from '../pages/HomePage/HomeContent/HomeContent';
+import QuanLyThietBi from '../pages/QuanLyThietBiPage/QuanLyThietBi';
+import QuanLyVe from '../pages/QuanLyVePage/QuanLyVe';
+import { ContentState } from '../reduxtoolkit/ContentSlice';
 
-interface RootState {
-    ContentReducer: {
-      Component: React.ReactNode
-    }
-  }
+
 type Props = {}
 
-export default function ContentHOC({}: Props) {
-    const { Component } = useSelector((state: RootState)  => state.ContentReducer)
-    return <div className='mr-4'>{Component}</div>
+export interface RootState {
+  content: ContentState;
 }
+
+
+// export default function ContentHOC({}: Props) {
+//   const Component = useSelector((state: RootState) => state.content.component);
+  
+//   // console.log({Component});
+  
+  
+//   return <div className='mr-4'>{Component}</div>
+// }
+
+const components = {
+  HomeContent: HomeContent,
+  QuanLyVe: QuanLyVe,
+  DoiSoatVe: DoiSoatVePage,
+  DanhSachSuKien:DanhSachSuKien,
+  QuanLyThietBi:QuanLyThietBi,
+  DanhSachGoiVe:DanhSachGoiVe,
+
+} as const;
+
+const ContentHOC = () => {
+  const { component, props } = useSelector((state: RootState) => state.content);
+  const ComponentToRender = components[component];
+
+  return <ComponentToRender {...props} />;
+};
+
+export default ContentHOC;

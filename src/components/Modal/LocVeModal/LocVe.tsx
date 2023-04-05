@@ -1,13 +1,14 @@
 import { Checkbox, DatePicker } from 'antd'
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { data } from '../../../data';
+import { RootState } from '../../../reduxtoolkit/storeSlice';
 
 type Props = {}
 
 export default function LocVe({}: Props) {
-
-   
+    const dispatch = useDispatch()
     const [usedStatus, setUsedStatus] = useState('all');
-
     const handleUsedStatusChange = (value: string) => {
         setUsedStatus(value);
     };
@@ -20,8 +21,7 @@ export default function LocVe({}: Props) {
         } else {
             setShowAllGate(false);
         }
-
-    };
+    }; 
 
   return (
     <div className='wrapper-model'>
@@ -102,7 +102,9 @@ export default function LocVe({}: Props) {
     </div>
 
     <div className='flex justify-center '>
-        <button className='filter-btn'>Lọc</button>
+        <button
+        // onClick={handleFilter}
+        className='filter-btn'>Lọc</button>
     </div>
 </div>
   )

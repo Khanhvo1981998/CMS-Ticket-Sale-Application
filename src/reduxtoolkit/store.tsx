@@ -5,10 +5,10 @@ import { ContentReducer } from "./reducers/ContentReducer";
 import { ModalReducer } from "./reducers/ModalReducer";
 
 export interface RootState {
-    content: {
-      Component: React.ReactNode
-    }
-  }
+  content: {
+    Component: React.ReactNode;
+  };
+}
 
 const rootReducer = combineReducers({
     //reducer con khai báo tại đây
@@ -22,3 +22,4 @@ const store = createStore(rootReducer, compose(applyMiddleware(thunk)
 ));
 
 export default store;
+

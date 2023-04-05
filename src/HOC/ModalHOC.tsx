@@ -1,37 +1,39 @@
-import { Modal } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
+import { Modal } from 'antd';
+import { closeModal, ModalState } from '../reduxtoolkit/ModalSlice';
+import CapNhatVe from '../components/Modal/CapNhatThongTinVeModal/CapNhatVe';
+import ThemGoiVe from '../components/Modal/ThemGoiVeModal/ThemGoiVe';
+import LocVe from '../components/Modal/LocVeModal/LocVe';
+import ChangeDate from '../components/Modal/DoiNgaySuDung/ChangeDate';
 
-interface RootState {
-  modal: {
-    Component: React.ReactNode;
-    isOpen: boolean;
-  };
-}
+interface Props {}
 
-type Props = {};
+const components = {
+  CapNhatVe:CapNhatVe,
+  ThemGoiVe:ThemGoiVe,
+  LocVe:LocVe,
+  ChangeDate:ChangeDate
+  
+} as const;
 
 export default function ModalHOC({}: Props) {
   const dispatch = useDispatch();
+  const { isOpen, component, props } = useSelector((state: { modal: ModalState }) => state.modal);
+console.log({isOpen}, {component}, {props});
 
-  const { isOpen,Component } = useSelector((state:any) => state.ModalReducer);
-
+  const ComponentToRender = components[component];
 
   const handleOk = () => {
-    dispatch({ type: "CLOSE_MODAL" });
+    dispatch(closeModal());
   };
 
   const handleCancel = () => {
-    dispatch({ type: "CLOSE_MODAL" });
+    dispatch(closeModal());
   };
 
   return (
-    <Modal
-      className="w-full h-56"
-      visible={isOpen}
-      onOk={handleOk}
-      onCancel={handleCancel}
-    >
-      {Component}
+    <Modal className="w-full" visible={isOpen} onOk={handleOk} onCancel={handleCancel}>
+      {<ComponentToRender {...props} />}
     </Modal>
   );
 }

@@ -6,10 +6,9 @@ import { CSVLink } from 'react-csv'
 import { data } from '../../data'
 import "./QuanLyVe.css"
 import ModalHOC from '../../HOC/ModalHOC';
-import { OPEN_MODAL } from '../../redux/reducers/ModalReducer';
-import LocVe from '../../components/Modal/LocVeModal/LocVe';
 import { useDispatch } from 'react-redux';
-import ChangeDate from '../../components/Modal/DoiNgaySuDung/ChangeDate';
+import { ChangeDate, LocVe } from '../../types/ModalType';
+import { openModal } from '../../reduxtoolkit/ModalSlice';
  
 interface Props {
    
@@ -25,24 +24,9 @@ export default function QuanLyVe({ }: Props) {
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
     };
-
-    const [selectedItem, setSelectedItem] = useState<{
-        stt: number | null;
-        bookingCode: string;
-        ticketNumber: number | null;
-        eventName: string;
-        ticketCombo: string;
-        ticketPrice: string;
-        ticketName: string;
-        ticketType: string;
-        status: string;
-        dateUsed: string;
-        ticketDate: string;
-        checkin: string;
-        checked: boolean;
-      }>();
-      
+   
     const renderDanhSachVe = () => {
+        
         const items = data.slice((currentPage - 1) * 7, currentPage * 7).filter((item) =>
             item.ticketNumber.toString().includes(searchValue)
         );
@@ -77,14 +61,19 @@ export default function QuanLyVe({ }: Props) {
                             {item.checkin}
                         </td>
                         <td
-                         onClick={() => {
-                            setSelectedItem(item);
-                            const action = {
-                              type: OPEN_MODAL,
-                              Component: <ChangeDate />,
-                            };
-                            dispatch(action);
-                          }}
+                        //  onClick={() => {
+                        //     setSelectedItem(item);
+                        //     const action = {
+                        //       type: OPEN_MODAL,
+                        //       Component: <ChangeDate />,
+                        //     };
+                        //     dispatch(action);
+                        //   }}
+                        onClick={(e) => {
+                            
+                            e.preventDefault();
+                            dispatch(openModal({ component: ChangeDate, props: null }));
+                        }} 
                         className="px-3 py-3 ">
                             <HiEllipsisVertical className='text-lg' />
                         </td>
@@ -96,7 +85,6 @@ export default function QuanLyVe({ }: Props) {
         })
 
     }
-
 
     const headers = [
         { key: 'stt', label: 'STT', accessor: 'stt' },
@@ -122,6 +110,8 @@ export default function QuanLyVe({ }: Props) {
     }));
 
 
+
+
     return (
         <div className=" ticket-list">
             <div className='m-3 '>
@@ -138,18 +128,23 @@ export default function QuanLyVe({ }: Props) {
                      
                     className="flex button-content">
                         <button
-                         onClick={(e) => {
+                        //  onClick={(e) => {
                               
-                            e.preventDefault()
-                            const action = {
-                                type: OPEN_MODAL,
-                                Component: <LocVe />,
-                            }
-                            dispatch(action)
+                        //     e.preventDefault()
+                        //     const action = {
+                        //         type: OPEN_MODAL,
+                        //         Component: <LocVe />,
+                        //     }
+                        //     dispatch(action)
+                        // }} 
+                        onClick={(e) => {
+                            
+                            e.preventDefault();
+                            dispatch(openModal({ component: LocVe, props: null }));
                         }} 
                            className="flex items-center justify-center mr-2 filter">
-                            <span className='mb-1' ><FilterOutlined className='mx-1' /></span>
-                            <span className='mx-2'> Lọc vé</span>
+                            <span className='mb-1 text-white' ><FilterOutlined className='mx-1' /></span>
+                            <span className='mx-2 text-white'> Lọc vé</span>
                           
                         </button>
                         <ModalHOC />

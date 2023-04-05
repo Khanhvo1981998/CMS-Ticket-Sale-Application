@@ -1,0 +1,6 @@
+export const HomeContent = "HomeContent"
+export const QuanLyVe = "QuanLyVe"
+export const DoiSoatVe = "DoiSoatVe"
+export const DanhSachSuKien = "DanhSachSuKien"
+export const QuanLyThietBi = "QuanLyThietBi"
+export const DanhSachGoiVe = "DanhSachGoiVe"

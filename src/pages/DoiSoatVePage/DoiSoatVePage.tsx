@@ -2,6 +2,7 @@ import { SearchOutlined } from '@ant-design/icons'
 import { Button, DatePicker, Pagination, PaginationProps } from 'antd'
 import Checkbox, { CheckboxChangeEvent } from 'antd/es/checkbox'
 import React, { useEffect, useState } from 'react'
+import { CSVLink } from 'react-csv'
 import { data } from '../../data'
 import "./DoiSoatVe.css"
 
@@ -82,10 +83,38 @@ export default function DoiSoatVePage({ }: Props) {
         setFilteredData(filteredItems);
     };
 
+    const headers = [
+        { key: 'stt', label: 'STT', accessor: 'stt' },
+        { key: 'bookingCode', label: 'Booking Code', accessor: 'bookingCode' },
+        { key: 'ticketNumber', label: 'Số vé', accessor: 'ticketNumber' },
+        { key: 'eventName', label: 'Tên sự kiện', accessor: 'eventName' },
+        { key: 'status', label: 'Tình trạng sử dụng', accessor: 'status' },
+        { key: 'dateUsed', label: 'Ngày sử dụng', accessor: 'dateUsed' },
+        { key: 'ticketDate', label: 'Ngày xuất vé', accessor: 'ticketDate' },
+        { key: 'checkin', label: 'Cổng check - in', accessor: 'checkin' },
+    ];
+
+
+    const records = data.slice((currentPage - 1) * 7, currentPage * 7).map((item) => ({
+        stt: item.stt,
+        bookingCode: item.bookingCode,
+        ticketNumber: item.ticketNumber,
+        eventName: item.eventName,
+        status: item.status,
+        dateUsed: item.dateUsed,
+        ticketDate: item.ticketDate,
+        checkin: item.checkin,
+    }));
+
+
     const renderButton = () => {
         if (showExportButton && !showCompleteButton) {
             return (
-                <button className="export">Xuất file(.csv)</button>
+                <button className="export">
+                            <CSVLink data={records} headers={headers} filename={"doi-soat-ve.csv"}>
+                                Xuất file(.csv)
+                            </CSVLink>
+                        </button>
             );
         }
         if (!showExportButton && showCompleteButton) {
@@ -137,7 +166,6 @@ export default function DoiSoatVePage({ }: Props) {
         onChange: onPageChange,
         total: getPageCount() * 7
       };
-      
       
     const renderDanhSachVe = () => {
         const items = filteredData
