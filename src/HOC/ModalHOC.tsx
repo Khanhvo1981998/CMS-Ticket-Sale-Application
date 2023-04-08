@@ -19,7 +19,7 @@ const components = {
 export default function ModalHOC({}: Props) {
   const dispatch = useDispatch();
   const { isOpen, component, props } = useSelector((state: { modal: ModalState }) => state.modal);
-console.log({isOpen}, {component}, {props});
+// console.log({isOpen}, {component}, {props});
 
   const ComponentToRender = components[component];
 

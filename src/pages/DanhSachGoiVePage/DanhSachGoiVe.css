@@ -1,39 +1,39 @@
-.ticket-list {
+.ticket-package {
   /* margin: 15px; */
   margin-top: 15px;
   background-color: #fff;
   border-radius: 15px;
 }
-.ticket-list .search {
+.ticket-package .search {
   position: relative;
   display: flex;
   /* padding: 10px 16px; */
   height: 48px;
 }
-.ticket-list .search input {
+.ticket-package .search input {
   background: #f7f7f8;
   border-radius: 7px;
   width: 250px;
   height: 28px;
 }
 
-.ticket-list
+.ticket-package
   input[type="search"]::-webkit-search-cancel-button {
   display: none;
 }
-.ticket-list .search .search-icon {
+.ticket-package .search .search-icon {
   font-size: 20px;
   position: absolute;
   top: 4px;
   left: 225px;
 }
-.ticket-list .search {
+.ticket-package .search {
   position: relative;
   display: flex;
   height: 48px;
 }
 
-.ticket-list .button-content .filter,
+.ticket-package .button-content .filter,
 .export {
   border: 1px solid #ff993b;
   border-radius: 10px;
@@ -41,41 +41,37 @@
   color: #ff993b;
   font-weight: bold;
 }
-.ticket-list .button-content .filter {
+.ticket-package .button-content .filter {
   color: #fff;
   background-color: #ff993b;
 }
 
-.ticket-list .button-content .filter,
+.ticket-package .button-content .filter,
 a:hover {
   color: #fff;
 }
-.ticket-list .table-header {
+.ticket-package .table-header {
   border-top: 10px;
 }
-.ticket-list .table-header tr {
+.ticket-package .table-header tr {
   background-color: #f1f4f8;
   border: none;
 }
-.ticket-list .table-header tr th {
+.ticket-package .table-header tr th {
   color: #1e0d03;
   padding: 0.5rem 0.5rem 0 0.5rem;
 }
-.ticket-list tbody tr td {
+.ticket-package tbody tr td {
   color: #61554f;
 }
 
-.ticket-list .ticket-used {
-  border: 1px solid #919dba;
-  background-color: #eaf1f8;
-  color: #919dba;
-}
-.ticket-list .ticket-unused {
+.ticket-package .ticket-used {
   border: 1px solid #40bf3f;
   background-color: #def6e0;
   color: #03ac00;
 }
-.ticket-list .ticket-expired {
+
+.ticket-package .ticket-disable {
   border: 1px solid #fd5959;
   background-color: #f8ebe8;
   color: #fd5959;

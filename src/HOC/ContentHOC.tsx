@@ -15,16 +15,6 @@ export interface RootState {
   content: ContentState;
 }
 
-
-// export default function ContentHOC({}: Props) {
-//   const Component = useSelector((state: RootState) => state.content.component);
-  
-//   // console.log({Component});
-  
-  
-//   return <div className='mr-4'>{Component}</div>
-// }
-
 const components = {
   HomeContent: HomeContent,
   QuanLyVe: QuanLyVe,

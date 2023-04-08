@@ -1,7 +1,6 @@
 import { HomeOutlined, MailOutlined, SearchOutlined, SettingFilled, UnorderedListOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import logo from "../../assets/logo.png"
-
 import { HiOutlineTicket } from "react-icons/hi";
 import { TbFileInvoice } from "react-icons/tb";
 import { FiMonitor } from "react-icons/fi";
@@ -9,15 +8,35 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import "./HomePage.css"
 import ContentHOC from '../../HOC/ContentHOC';
 import Login from '../Login/Login';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { openContent } from '../../reduxtoolkit/ContentSlice';
 import { DanhSachGoiVe, DanhSachSuKien, DoiSoatVe, HomeContent, QuanLyThietBi, QuanLyVe } from '../../types/PageType';
+
+
+
 type Props = {}
 
+interface User {
+    stt: number;
+    bookingCode: string;
+    ticketNumber: number;
+    eventName: string;
+    ticketCombo: string;
+    ticketPrice: string;
+    ticketName: string;
+    ticketType: string;
+    status: string;
+    dateUsed: string;
+    ticketDate: string;
+    checkin: string;
+    checked: boolean;
+  }
 
 export default function HomePage({ }: Props) {
+
     const [activeItem, setActiveItem] = useState('Home');
-    const dispatch = useDispatch()
+const dispatch = useDispatch()
+    
     return (
         <div className='wrapper-homepage'>
             <div className=" wrapper-home">
@@ -34,15 +53,7 @@ export default function HomePage({ }: Props) {
                                     <ul>
 
                                         <li
-                                            // onClick={(e) => {
-                                            //     e.preventDefault()
-                                            //     setActiveItem('Home')
-                                            //     const action = {
-                                            //         type: OPEN_CONTENT,
-                                            //         Component: <HomeContent />
-                                            //     }
-                                            //     dispatch(action)
-                                            // }}
+
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 setActiveItem('Home');
@@ -55,15 +66,6 @@ export default function HomePage({ }: Props) {
                                             <a className='flex my-2 ml-1 mr-20 logo-item' href=""><HomeOutlined className='icon' />Trang chủ</a>
                                         </li>
                                         <li
-                                        // onClick={(e) => {
-                                            //     e.preventDefault()
-                                            //     setActiveItem('QuanLyVe')
-                                            //     const action = {
-                                            //         type: OPEN_CONTENT,
-                                            //         Component: <QuanLyVe />
-                                            //     }
-                                            //     dispatch(action)
-                                            // }}
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 setActiveItem('QuanLyVe');
@@ -72,15 +74,7 @@ export default function HomePage({ }: Props) {
                                             style={{ borderRadius: 8, cursor: "pointer", }}
                                             className={`nav-item ${activeItem === 'QuanLyVe' ? 'active' : ''}`}><a className='flex my-2 ml-1 mr-20 logo-item' href=""><HiOutlineTicket className='icon' /> Quản lý vé</a></li>
                                         <li
-                                            // onClick={(e) => {
-                                            //     e.preventDefault()
-                                            //     setActiveItem('DoiSoatVe')
-                                            //     const action = {
-                                            //         type: OPEN_CONTENT,
-                                            //         Component: <DoiSoatVePage />
-                                            //     }
-                                            //     dispatch(action)
-                                            // }}
+
                                             onClick={(e) => {
                                             e.preventDefault()
                                                 setActiveItem('DoiSoatVe');
@@ -90,16 +84,6 @@ export default function HomePage({ }: Props) {
                                             style={{ borderRadius: 8, cursor: "pointer", }}
                                             className={`nav-item ${activeItem === 'DoiSoatVe' ? 'active' : ''}`}><a className='flex my-2 ml-1 mr-20 logo-item' href=""><TbFileInvoice className='icon' />Đối soát vé</a></li>
                                         <li
-                                            // onClick={(e) => {
-                                            //     e.preventDefault()
-                                            //     setActiveItem('DanhSachSuKien')
-                                            //     const action = {
-                                            //         type: OPEN_CONTENT,
-                                            //         Component: <DanhSachSuKien />
-                                            //     }
-                                            //     dispatch(action)
-                                            // }}
-
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 setActiveItem('DanhSachSuKien');
@@ -111,16 +95,7 @@ export default function HomePage({ }: Props) {
                                                 <UnorderedListOutlined className='icon' />Danh sách sự kiện</a>
                                         </li>
                                         <li
-                                            // onClick={(e) => {
-                                            //     e.preventDefault()
-                                            //     setActiveItem('QuanLyThietBi')
-                                            //     const action = {
-                                            //         type: OPEN_CONTENT,
-                                            //         Component: <QuanLyThietBi />
-                                            //     }
-                                            //     dispatch(action)
-                                            // }}
-                                            
+
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 setActiveItem('QuanLyThietBi');
@@ -130,15 +105,6 @@ export default function HomePage({ }: Props) {
                                             className={`nav-item ${activeItem === 'QuanLyThietBi' ? 'active' : ''}`}>
                                             <a className='flex my-2 ml-1 mr-20 logo-item' href=""><FiMonitor className='icon' />Quản lý thiết bị</a></li>
                                         <li
-                                            // onClick={(e) => {
-                                            //     e.preventDefault()
-                                            //     setActiveItem('CaiDat')
-                                            //     const action = {
-                                            //         type: OPEN_CONTENT,
-                                            //         Component: <DanhSachGoiVe />
-                                            //     }
-                                            //     dispatch(action)
-                                            // }}
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 setActiveItem('CaiDat');

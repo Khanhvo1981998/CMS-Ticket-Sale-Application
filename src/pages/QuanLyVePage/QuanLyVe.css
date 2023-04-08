@@ -22,6 +22,22 @@
   input[type="search"]::-webkit-search-cancel-button {
   display: none;
 }
+
+.ticket-list
+  :where(.css-dev-only-do-not-override-1e3x2xa).ant-tabs
+  .ant-tabs-tab:hover {
+  color: #ff993b;
+}
+.ticket-list .ant-tabs-tab-active .ant-tabs-ink-bar {
+  background-color: #ff993b;
+}
+
+.ticket-list
+  .ant-tabs
+  .ant-tabs-tab.ant-tabs-tab-active
+  .ant-tabs-tab-btn {
+  color: #ff993b;
+}
 .ticket-list .search .search-icon {
   font-size: 20px;
   position: absolute;
@@ -109,4 +125,8 @@
 
 .ant-modal-content .ant-modal-footer button {
   display: none;
+}
+
+.ant-tabs-top > .ant-tabs-nav::before {
+  border: none;
 }

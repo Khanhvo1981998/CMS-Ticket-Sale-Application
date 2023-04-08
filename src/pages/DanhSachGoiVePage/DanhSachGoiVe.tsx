@@ -1,14 +1,16 @@
 import { EditOutlined, FilterOutlined, SearchOutlined } from '@ant-design/icons'
 import { Checkbox, DatePicker, Modal, Pagination } from 'antd'
-import React, { ReactElement, useRef, useState } from 'react'
+import React, { ReactElement, useEffect, useRef, useState } from 'react'
 import { CSVLink } from 'react-csv'
 import { data } from '../../data'
 import "./DanhSachGoiVe.css"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { openModal } from '../../reduxtoolkit/ModalSlice';
 import ModalHOC from '../../HOC/ModalHOC'
 import { CapNhatVe, ThemGoiVe } from '../../types/ModalType'
-
+import { useThunkDispatch } from '../../reduxtoolkit/storeSlice'
+import { fetchTicketPackages } from '../../reduxtoolkit/actions/TicketActions'
+import { selectTicketPackages } from '../../reduxtoolkit/TicketPackageSlice'
 
 
 
@@ -17,7 +19,7 @@ interface Props {
 }
 
 export default function DanhSachGoiVe({ }: Props) {
-    const dispatch = useDispatch()
+
     const [searchValue, setSearchValue] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,31 +28,42 @@ export default function DanhSachGoiVe({ }: Props) {
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
     };
+    const dispatch = useThunkDispatch();
 
-  
+    const ticketsData = useSelector(selectTicketPackages);
+    console.log({ticketsData},"ticketPackage");
+    
+
+    useEffect(() => {
+      dispatch(fetchTicketPackages());
+    }, [dispatch]);
+ 
 
     const renderDanhSachVe = () => {
-        const items = data.slice((currentPage - 1) * 7, currentPage * 7).filter((item) =>
-            item.ticketNumber.toString().includes(searchValue)
+        const items = ticketsData.slice((currentPage - 1) * 7, currentPage * 7).filter((item) =>
+            item.bookingCode?.toString().includes(searchValue)
+        
+            
         );
         return items.map((item, index) => {
+            console.log({item});
             return (
                 <>
-                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
                         <td scope="row" className="px-3 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                            {item.stt}
+                            {index+1}
                         </td>
                         <td className="py-3 ">
                             {item.bookingCode}
                         </td>
-                        <td className="py-3 ">
+                        <td className="px-2 text-left">
                             {item.ticketName}
                         </td>
-                        <td className="py-3 ">
-                            {item.dateUsed}
+                        <td className="px-3 py-3">
+                            {item.startDate}
                         </td>
                         <td className="px-3 py-3">
-                            {item.ticketDate}
+                            {item.endDate}
                         </td>
                         <td className="px-4 py-3 ">
                             {`${item.ticketPrice} VNĐ`}
@@ -60,20 +73,10 @@ export default function DanhSachGoiVe({ }: Props) {
                         </td>
 
                         <td className="py-3 ">
-                            {(item.status === "Đã sử dụng") ? <span className='flex p-2 mx-4 rounded ticket-used'> <div className='w-3 h-3 mt-1 mr-1 rounded-full bg-slate-500'></div> Đã sử dụng</span> : (item.status === "Chưa sử dụng") ? <span className='flex p-2 mx-4 rounded ticket-unused '><div className='w-3 h-3 mt-1 mr-1 rounded-full bg-lime-500'></div>Chưa sử dụng</span> : (item.status === "Hết hạn") ? <span className='flex p-2 mx-4 rounded ticket-expired'><div className='w-3 h-3 mt-1 mr-1 bg-red-500 rounded-full'></div>Hết hạn</span> : ""}
+                            {(item.status === "Đang áp dụng") ? <span className='flex p-2 mx-4 rounded ticket-used'> <div className='w-3 h-3 mt-1 mr-1 rounded-full bg-lime-500'></div>Đang áp dụng</span> : (item.status === "Tắt") ? <span className='flex p-2 mx-4 rounded ticket-disable'><div className='w-3 h-3 mt-1 mr-1 bg-red-500 rounded-full'></div>Tắt</span> : (item.status === "Hết hạn") ? <span className='flex p-2 mx-4 rounded ticket-expired'><div className='w-3 h-3 mt-1 mr-1 bg-red-500 rounded-full'></div>Hết hạn</span> : ""}
                         </td>
                         <td
-                        // onClick={(e) => {
-                              
-                        //     e.preventDefault()
-                        //     const action = {
-                        //         type: OPEN_MODAL,
-                        //         Component: <CapNhatVe />,
-                        //     }
-                        //     dispatch(action)
-                        // }}  
 
-                        
                         onClick={(e) => {
                             
                             e.preventDefault();
@@ -121,7 +124,7 @@ export default function DanhSachGoiVe({ }: Props) {
 
 
     return (
-        <div className=" ticket-list">
+        <div className=" ticket-package">
             <div className='m-3 '>
 
                 <div className='pt-3 text-3xl font-bold '>
@@ -141,22 +144,14 @@ export default function DanhSachGoiVe({ }: Props) {
                         </button>
 
                         <button
-                    //    onClick={(e) => {
-                              
-                    //     e.preventDefault()
-                    //     const action = {
-                    //         type: OPEN_MODAL,
-                    //         Component: <ThemGoiVe />,
-                    //     }
-                    //     dispatch(action)
-                    // }} 
+ 
                     onClick={(e) => {
                             
                         e.preventDefault();
                         dispatch(openModal({ component: ThemGoiVe, props: null }));
                     }} 
                         className="flex items-center justify-center ml-2 filter">
-                            <span className='mx-2 text-white add-ticket'> Thêm gói vé</span>
+                            <span className='mx-2 add-ticket'> Thêm gói vé</span>
                         </button>
                     </div>
                     <ModalHOC />

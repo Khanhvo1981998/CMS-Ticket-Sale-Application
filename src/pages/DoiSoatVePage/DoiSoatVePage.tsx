@@ -3,17 +3,17 @@ import { Button, DatePicker, Pagination, PaginationProps } from 'antd'
 import Checkbox, { CheckboxChangeEvent } from 'antd/es/checkbox'
 import React, { useEffect, useState } from 'react'
 import { CSVLink } from 'react-csv'
+import { useDispatch, useSelector } from 'react-redux'
 import { data } from '../../data'
+import { fetchTickets } from '../../reduxtoolkit/actions/TicketActions'
+import { useThunkDispatch } from '../../reduxtoolkit/storeSlice'
+import { selectTickets } from '../../reduxtoolkit/TicketSlice'
 import "./DoiSoatVe.css"
 
 type Props = {}
-interface MyPaginationProps extends PaginationProps {
-    currentPage: number;
-    onPageChange: (page: number) => void;
-    pageCount: number;
-  }
 
 export default function DoiSoatVePage({ }: Props) {
+
     const [searchValue, setSearchValue] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,8 +27,19 @@ export default function DoiSoatVePage({ }: Props) {
     const [showChecked, setShowChecked] = useState(false);
     const [showUnchecked, setShowUnchecked] = useState(false);
 
+    const dispatch = useThunkDispatch();
 
-    const [filteredData, setFilteredData] = useState(data)
+    const ticketsData = useSelector(selectTickets);
+    // console.log({ticketsData});
+    
+
+    useEffect(() => {
+      dispatch(fetchTickets());
+    }, [dispatch]);
+ 
+    
+
+    const [filteredData, setFilteredData] = useState(ticketsData)
 
     const [showExportButton, setShowExportButton] = useState(false);
     const [showCompleteButton, setShowCompleteButton] = useState(false);
@@ -57,8 +68,9 @@ export default function DoiSoatVePage({ }: Props) {
     };
 
 
+
     const onFilterClick = () => {
-        let filteredItems = data.filter((item) =>
+        let filteredItems = ticketsData.filter((item) =>
             item.ticketNumber
         );
 
@@ -66,18 +78,18 @@ export default function DoiSoatVePage({ }: Props) {
             filteredItems = filteredItems.filter((item) => item.checked);
             setShowExportButton(true);
             setShowCompleteButton(false)
-            console.log({ showExportButton });;
+            // console.log({ showExportButton });;
         } else if (showUnchecked) {
             filteredItems = filteredItems.filter((item) => !item.checked);
             setShowExportButton(false);
             setShowCompleteButton(true);
-            console.log({ showExportButton });
+            // console.log({ showExportButton });
 
         } else {
             setShowAll(true)
             setShowExportButton(false);
             setShowCompleteButton(false);
-            console.log({ showExportButton });
+            // console.log({ showExportButton });
         }
 
         setFilteredData(filteredItems);
@@ -144,7 +156,7 @@ export default function DoiSoatVePage({ }: Props) {
           filteredItems = filteredItems.filter((item) => !item.checked);
         }
       
-        console.log({filteredItems});
+        // console.log({filteredItems});
         
         const itemCount = filteredItems.length;
         const pageCount = Math.ceil(itemCount / itemsPerPage);
@@ -166,6 +178,8 @@ export default function DoiSoatVePage({ }: Props) {
         onChange: onPageChange,
         total: getPageCount() * 7
       };
+
+  
       
     const renderDanhSachVe = () => {
         const items = filteredData
@@ -185,7 +199,7 @@ export default function DoiSoatVePage({ }: Props) {
                         </td>
 
                         <td className="px-4 py-4">
-                            {item.dateUsed}
+                            {item.startDate}
                         </td>
 
                         <td className="px-4 py-3 ">

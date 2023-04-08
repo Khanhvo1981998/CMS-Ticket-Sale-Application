@@ -1,8 +1,9 @@
 import { applyMiddleware, combineReducers, createStore, compose } from "redux";
 
 import thunk from "redux-thunk";
-import { ContentReducer } from "./reducers/ContentReducer";
-import { ModalReducer } from "./reducers/ModalReducer";
+import { ContentReducer } from "./ContentReducer";
+import { ModalReducer } from "./ModalReducer";
+
 
 export interface RootState {
   content: {
@@ -14,7 +15,7 @@ const rootReducer = combineReducers({
     //reducer con khai báo tại đây
     applyMiddleware,
     ContentReducer,
-    ModalReducer,
+    ModalReducer
 })
 
 const store = createStore(rootReducer, compose(applyMiddleware(thunk)

@@ -1,8 +1,13 @@
 import { CalendarOutlined } from '@ant-design/icons'
 import { DatePicker } from 'antd'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import Chart from '../../../components/Chart/Chart'
 import ChartEvent from '../../../components/ChartEvent/ChartEvent'
 import ChartFamily from '../../../components/ChartFamily/ChartFamily'
+import { fetchTickets } from '../../../reduxtoolkit/actions/TicketActions'
+import { useThunkDispatch } from '../../../reduxtoolkit/storeSlice'
+import { selectTickets } from '../../../reduxtoolkit/TicketSlice'
 import "../HomeContent/HomeContent.css"
 
 
@@ -11,6 +16,8 @@ type Props = {
 }
 
 export default function HomeContent({ }: Props) {
+
+
     return (
         <div className="chart-main ">
             <div className='pt-3 ml-3 text-3xl font-bold '>
