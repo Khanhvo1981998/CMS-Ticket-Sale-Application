@@ -6,7 +6,7 @@ import { RootState } from './storeSlice';
 
 
 export interface Ticket {
-  stt: number;
+ 
   bookingCode: string;
   ticketNumber: number;
   eventName: string;
@@ -18,6 +18,9 @@ export interface Ticket {
   startDate: string;
   endDate: string;
   checkin: string;
+  startTime:string;
+  endTime:string;
+  numberOfTickets:string;
   checked: boolean;
   used: boolean;
   expired: boolean;

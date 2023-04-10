@@ -6,13 +6,14 @@ import { CSVLink } from 'react-csv'
 import { useDispatch, useSelector } from 'react-redux'
 import { data } from '../../data'
 import { fetchTickets } from '../../reduxtoolkit/actions/TicketActions'
-import { useThunkDispatch } from '../../reduxtoolkit/storeSlice'
+import { AppDispatch } from '../../reduxtoolkit/storeSlice'
 import { selectTickets } from '../../reduxtoolkit/TicketSlice'
 import "./DoiSoatVe.css"
 
 type Props = {}
 
 export default function DoiSoatVePage({ }: Props) {
+    const useThunkDispatch = () => useDispatch<AppDispatch>();
 
     const [searchValue, setSearchValue] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -191,7 +192,7 @@ export default function DoiSoatVePage({ }: Props) {
                 <>
                     <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td scope="row" className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                            {item.stt}
+                            {index+1}
                         </td>
 
                         <td className="px-2 py-3">

@@ -86,7 +86,7 @@ export default function QuanLyVe({ }: Props) {
                 <>
                     <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td scope="row" className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                            {item.stt}
+                            {index+1}
                         </td>
                         <td className="py-3 ">
                             {item.bookingCode}
@@ -174,8 +174,8 @@ export default function QuanLyVe({ }: Props) {
                             dispatch(openModal({ component: LocVe, props: null }));
                         }} 
                            className="flex items-center justify-center mr-2 filter">
-                            <span className='mb-1 text-white' ><FilterOutlined className='mx-1' /></span>
-                            <span className='mx-2 text-white'> Lọc vé</span>
+                            <span className='text-lg' ><FilterOutlined className='mx-1' /></span>
+                            <span className='mx-2 '> Lọc vé</span>
                           
                         </button>
                         <ModalHOC />
@@ -276,7 +276,7 @@ export default function QuanLyVe({ }: Props) {
                 <>
                     <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td scope="row" className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap ">
-                            {item.stt}
+                            {index+1}
                         </td>
                         <td className="py-3 ">
                             {item.bookingCode}
@@ -361,7 +361,7 @@ export default function QuanLyVe({ }: Props) {
                             dispatch(openModal({ component: LocVe, props: null }));
                         }} 
                            className="flex items-center justify-center mr-2 filter">
-                            <span className='mb-1 ' ><FilterOutlined className='mx-1' /></span>
+                            <span className='text-lg ' ><FilterOutlined className='mx-1' /></span>
                             <span className='mx-2 '> Lọc vé</span>
                           
                         </button>

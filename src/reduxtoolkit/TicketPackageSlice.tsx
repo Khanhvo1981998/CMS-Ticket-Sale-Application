@@ -1,26 +1,23 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../lib/firebase/firebase';
-import { fetchTicketPackages, fetchTickets } from './actions/TicketActions';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { db, ticketDB } from '../lib/firebase/firebase';
+import { fetchTicketPackages, updateTicketPackageAsync } from './actions/TicketActions';
 import { RootState } from './storeSlice';
 
-
 export interface TicketPackage {
-  stt: number;
+  
   bookingCode: string;
-  ticketNumber: number;
   eventName: string;
+  ticketNumber: number;
   ticketCombo: string;
   ticketPrice: string;
   ticketName: string;
-  ticketType: string;
   status: string;
   startDate: string;
   endDate: string;
-  checkin: string;
-  checked: boolean;
-  used: boolean;
-  expired: boolean;
+  startTime: string;
+  endTime: string;
+  numberOfTickets: string;
 }
 
 interface TicketPackageState {
@@ -30,15 +27,18 @@ interface TicketPackageState {
 }
 
 const initialState: TicketPackageState = {
-    ticketPackage: [],
+  ticketPackage: [],
   isLoading: false,
   error: null,
 };
+
+
+
 export const ticketPackageSlice = createSlice({
   name: 'tickets',
   initialState,
   reducers: {
-    addTicketRequest: (state, action: PayloadAction<TicketPackage>) => {
+    addTicketRequest: (state) => {
       state.isLoading = true;
       state.error = null;
     },
@@ -47,6 +47,21 @@ export const ticketPackageSlice = createSlice({
       state.ticketPackage.push(action.payload);
     },
     addTicketFailure: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    updateTicketPackage: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    updateTicketPackageSuccess: (state, action: PayloadAction<TicketPackage>) => {
+      state.isLoading = false;
+      const index = state.ticketPackage.findIndex(ticket => ticket.bookingCode === action.payload.bookingCode);
+      if (index !== -1) {
+        state.ticketPackage[index] = action.payload;
+      }
+    },
+    updateTicketPackageFailure: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -64,13 +79,37 @@ export const ticketPackageSlice = createSlice({
       .addCase(fetchTicketPackages.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message ?? 'Lỗi';
+      })
+      .addCase(updateTicketPackageAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const index = state.ticketPackage.findIndex(ticket => ticket.bookingCode === action.payload.bookingCode);
+        if (index !== -1) {
+          state.ticketPackage[index] = action.payload;
+        }
+      })
+      .addCase(updateTicketPackageAsync.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to update ticket package';
       });
   },
 });
+
+
+
 export const selectTicketPackages = (state: RootState) => state.ticketPackage.ticketPackage;
-export const { addTicketRequest, addTicketSuccess, addTicketFailure } = ticketPackageSlice.actions;
+export const {
+  addTicketRequest,
+  addTicketSuccess,
+  addTicketFailure,
+  updateTicketPackage,
+  updateTicketPackageSuccess,
+  updateTicketPackageFailure
+} = ticketPackageSlice.actions;
+
 
 export default ticketPackageSlice.reducer;
+
+
 
 
 

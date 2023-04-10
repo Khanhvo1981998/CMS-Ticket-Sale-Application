@@ -8,9 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openModal } from '../../reduxtoolkit/ModalSlice';
 import ModalHOC from '../../HOC/ModalHOC'
 import { CapNhatVe, ThemGoiVe } from '../../types/ModalType'
-import { useThunkDispatch } from '../../reduxtoolkit/storeSlice'
 import { fetchTicketPackages } from '../../reduxtoolkit/actions/TicketActions'
+import { AppDispatch } from '../../reduxtoolkit/storeSlice'
+import { useParams } from 'react-router-dom'
+import { doc } from 'firebase/firestore'
+import { db } from '../../lib/firebase/firebase'
 import { selectTicketPackages } from '../../reduxtoolkit/TicketPackageSlice'
+// import { selectTicketPackages } from '../../reduxtoolkit/TicketPackageSlice'
 
 
 
@@ -19,6 +23,7 @@ interface Props {
 }
 
 export default function DanhSachGoiVe({ }: Props) {
+    const useThunkDispatch = () => useDispatch<AppDispatch>();
 
     const [searchValue, setSearchValue] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -31,10 +36,10 @@ export default function DanhSachGoiVe({ }: Props) {
     const dispatch = useThunkDispatch();
 
     const ticketsData = useSelector(selectTicketPackages);
-    console.log({ticketsData},"ticketPackage");
-    
+  
 
     useEffect(() => {
+      
       dispatch(fetchTicketPackages());
     }, [dispatch]);
  
@@ -46,7 +51,7 @@ export default function DanhSachGoiVe({ }: Props) {
             
         );
         return items.map((item, index) => {
-            console.log({item});
+          
             return (
                 <>
                     <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
@@ -60,16 +65,19 @@ export default function DanhSachGoiVe({ }: Props) {
                             {item.ticketName}
                         </td>
                         <td className="px-3 py-3">
-                            {item.startDate}
+                            <span> {item.startDate}</span> <br />
+                            <span>{item.startTime}</span>
+                           
                         </td>
                         <td className="px-3 py-3">
-                            {item.endDate}
+                        <span> {item.endDate}</span> <br />
+                            <span>{item.endTime}</span>
                         </td>
                         <td className="px-4 py-3 ">
                             {`${item.ticketPrice} VNĐ`}
                         </td>
                         <td className="px-4 py-3 ">
-                            {`${item.ticketCombo} VNĐ/4 Vé`}
+                            {`${item.ticketCombo} VNĐ/${item.numberOfTickets} Vé`}
                         </td>
 
                         <td className="py-3 ">

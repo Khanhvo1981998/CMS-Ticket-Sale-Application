@@ -1,20 +1,20 @@
-import { DownOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Calendar, Checkbox, DatePicker, Dropdown, MenuProps, message, Select, Space, TimePicker } from 'antd'
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { db } from '../../../lib/firebase/firebase';
-import { fetchTickets } from '../../../reduxtoolkit/actions/TicketActions';
-import { closeModal } from '../../../reduxtoolkit/ModalSlice';
-import { useThunkDispatch } from '../../../reduxtoolkit/storeSlice';
-import "./ThemGoiVe.css"
+import { Checkbox, DatePicker, message, Select, Space, TimePicker } from "antd";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTicket } from "../../../reduxtoolkit/actions/TicketActions";
+import { closeModal } from "../../../reduxtoolkit/ModalSlice";
+import { AppDispatch } from "../../../reduxtoolkit/storeSlice";
+import { TicketPackage } from "../../../reduxtoolkit/TicketPackageSlice";
+import "./ThemGoiVe.css";
 
 type Props = {}
 
 
 export default function ThemGoiVe({ }: Props) {
+   const useThunkDispatch = () => useDispatch<AppDispatch>();
 
-const dispatch = useDispatch()
+  // const dispatch = useDispatch()
+  const dispatch = useThunkDispatch()
   const [stt, setSTT] = useState('');
   const [bookingCode, setBookingCode] = useState('');
   const [ticketName, setTicketName] = useState('');
@@ -22,71 +22,60 @@ const dispatch = useDispatch()
   const [endDate, setEndDate] = useState('');
   const [ticketPrice, setTicketPrice] = useState('');
   const [ticketCombo, setTicketCombo] = useState('');
-  const [status, setStatus] = useState('');
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
-    try {
-      const ticketsRef = collection(db, 'tickets-packages');
-      const ticketRef = doc(ticketsRef);
-
-      await setDoc(ticketRef, {
-        stt,
-        bookingCode,
-        ticketName,
-        startDate,
-        endDate,
-        ticketPrice,
-        ticketCombo,
-        status,
-      });
-
-      // Reset form after successful submit
-      setSTT('');
-      setTicketName('');
-      setBookingCode('');
-      setStartDate('');
-      setEndDate('');
-      setTicketPrice('');
-      setTicketCombo('');
-      setStatus('');
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [numberOfTickets, setNumberOfTickets] = useState('');
+  const [status, setStatus] = useState('Đang áp dụng');
+  const [eventName, setEventName] = useState('');
+  const [ticketNumber, setTicketNumber] = useState(1);
 
   const handleChange = (value: string) => {
     // console.log(`selected ${value}`);
     setStatus(value)
   };
 
-  const handleMenuClick: MenuProps['onClick'] = (e) => {
-    message.info('Click on menu item.');
-    console.log('click', e);
-  };
-  const items: MenuProps['items'] = [
-    {
-      label: 'Đang áp dụng',
-      key: '1',
-      icon: <UserOutlined />,
-    },
-    {
-      label: 'Tắt',
-      key: '2',
-      icon: <UserOutlined />,
-    },
-
-  ];
-
-  const menuProps = {
-    items,
-    onClick: handleMenuClick,
-  };
-
   const handleOk = () => {
     dispatch(closeModal());
   };
+
+  const handleCancel = () => {
+    dispatch(closeModal());
+  };
+
+ 
+
+
+  const handleSubmit = async (e:any) => {
+    e.preventDefault();
+  
+    const newTicketPackage: TicketPackage = {
+      ticketName: ticketName,
+      startDate: startDate,
+      startTime: startTime,
+      endDate: endDate,
+      endTime: endTime,
+      ticketPrice: ticketPrice,
+      ticketCombo: ticketCombo,
+      bookingCode: bookingCode,
+      status: status,
+      numberOfTickets: numberOfTickets,
+      eventName: eventName,
+      ticketNumber: ticketNumber,
+    };
+  
+    try {
+      
+      await dispatch(addTicket(newTicketPackage));
+      message.success("Cập nhật thành công")
+      // Reset form fields here
+    } catch (error) {
+      console.log(error);
+      message.error("Cập nhật thất bại")
+    }
+  };
+
+
+
 
 
   return (
@@ -117,7 +106,13 @@ const dispatch = useDispatch()
               }}
 
               className='border-gray-400 border-1' />
-            <TimePicker className='ml-2 border-gray-400 border-1' aria-label='custom' />
+            <TimePicker
+              onChange={(time) => {
+                if (time) {
+                  setStartTime(time.format('HH:mm:ss'));
+                }
+              }}
+              className='ml-2 border-gray-400 border-1' aria-label='custom' />
           </div>
         </div>
         <div className='pl-8' >
@@ -130,7 +125,13 @@ const dispatch = useDispatch()
                 }
               }}
               className='border-gray-400 border-1' />
-            <TimePicker className='ml-2 border-gray-400 border-1' aria-label='custom' />
+            <TimePicker
+              onChange={(time) => {
+                if (time) {
+                  setEndTime(time.format('HH:mm:ss'));
+                }
+              }}
+              className='ml-2 border-gray-400 border-1' aria-label='custom' />
           </div>
         </div>
       </div>
@@ -153,7 +154,7 @@ const dispatch = useDispatch()
           </span>
           <input
             onChange={(e) => setTicketCombo(e.target.value)}
-            className='w-24 h-8 pl-1 bg-gray-100 border-none rounded ' type="text" placeholder='Giá vé' /> / <input className='h-8 pl-1 bg-gray-100 border-none rounded w-14' type="text" placeholder='Giá vé' /> vé
+            className='w-24 h-8 pl-1 bg-gray-100 border-none rounded ' type="text" placeholder='Giá vé' /> / <input onChange={(e) => setNumberOfTickets(e.target.value)} className='h-8 pl-1 bg-gray-100 border-none rounded w-14' type="text" placeholder='Giá vé' /> vé
         </div>
       </div>
 
@@ -183,10 +184,9 @@ const dispatch = useDispatch()
 
       <div className='flex justify-center'>
         <button
-          // onClick={handleCancel}
+          onClick={handleCancel}
           className='px-8 py-1 border-orange-400 rounded border-1'> <span className='font-bold text-orange-400'> Huỷ</span></button>
         <button
-          // onClick={handleSubmit}
           onClick={handleOk}
           className='px-8 py-1 ml-4 bg-orange-400 border-orange-400 rounded border-1'> <span className='font-bold text-white'> Lưu</span></button>
       </div>

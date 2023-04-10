@@ -1,8 +1,8 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../../lib/firebase/firebase";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Ticket } from "../TicketSlice";
-import { addTicketFailure, addTicketRequest, addTicketSuccess } from "../TicketPackageSlice";
+import {  TicketPackage } from "../TicketPackageSlice";
 
 export const fetchTickets = createAsyncThunk('tickets/fetchTickets', async () => {
   const ticketsCollection = collection(db, 'tickets');
@@ -25,16 +25,59 @@ export const fetchTicketPackages = createAsyncThunk('tickets-packages/fetchTicke
   return tickets;
 });
 
-export const addTicket = (ticket: Ticket) => async (dispatch: any) => {
-  try {
-    dispatch(addTicketRequest(ticket));
-    const ticketsRef = (db as any).collection('tickets-packages');
-    const docRef = await ticketsRef.add(ticket);
-    const newTicket = { ...ticket, id: docRef.id };
-    dispatch(addTicketSuccess(newTicket));
-  } catch (error) {
-    dispatch(addTicketFailure(error as unknown as string));
+
+
+export const addTicket = createAsyncThunk(
+  'tickets-packages/addTicket',
+  async (ticketPackage: TicketPackage, { rejectWithValue }) => {
+    try {
+      const docRef = await addDoc(collection(db, 'tickets-packages'), ticketPackage);
+      const newTicketPackage = { id: docRef.id, ...ticketPackage };
+      return newTicketPackage;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
   }
-};
+);
+
+export const updateTicketPackageAsync = createAsyncThunk(
+  'tickets/updateTicket',
+  async ({ id, ticketPackage }: { id: string, ticketPackage: TicketPackage }, { rejectWithValue }) => {
+    const { bookingCode, ...data } = ticketPackage;
+    try {
+      const docRef = doc(db, 'tickets-packages', id);
+      const snapshot = await getDoc(docRef);
+      if (snapshot.exists()) {
+        await updateDoc(docRef, data);
+        return ticketPackage;
+      } else {
+        return rejectWithValue('Data not found');
+      }
+    } catch (error) {
+      return rejectWithValue(`Error updating ticket package: ${(error as Error).message}`);
+    }
+  }
+);
+// export const updateTicketPackageAsync = createAsyncThunk(
+//   'tickets/updateTicketPackageAsync',
+//   async (payload: { id: string; ticketPackage: TicketPackage }, { rejectWithValue }) => {
+//     const { id, ticketPackage } = payload;
+//     console.log({id});
+    
+//     try {
+//       const docRef = doc(db, 'tickets-packages', id);
+//       const snapshot = await getDoc(docRef);
+//       if (snapshot.exists()) {
+//         const {bookingCode,...data } = ticketPackage;
+//         await updateDoc(docRef, data);
+//         return ticketPackage;
+//       } else {
+//         return rejectWithValue('Data not found');
+//       }
+//     } catch (error) {
+//       return rejectWithValue(`Error updating ticket package: ${(error as Error).message}`);
+//     }
+//   }
+// );
 
 
